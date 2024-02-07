@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
+import 'package:zlandsfrontend/pages/maindashboard.dart';
 
 class MessageSuccessScreen extends StatelessWidget {
   const MessageSuccessScreen
@@ -28,7 +29,12 @@ class MessageSuccessScreen extends StatelessWidget {
             SizedBox(height: 40,),
             Padding(padding: EdgeInsets.only(left: 80,right: 70,)
             
-            ,child: button(Label: 'Okay,Go to my dashboard', function: (){}, ZColors: ZColors.buttonColorgreen),
+            ,child: button(Label: 'Okay,Go to my dashboard', function: (){Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainDashboard(),));
+
+            }, ZColors: ZColors.buttonColorgreen),
             )
             ,SizedBox(height: 30,)
           ],

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zlandsfrontend/pages/MyProfileScreen.dart';
 
 import '../common_widgets/common_widgets.dart';
 
@@ -15,7 +16,10 @@ class ContactUsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Row(
           children: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back ,color: Colors.white, size: 30,),hoverColor:Colors.white.withOpacity(0.15) )
+            IconButton(onPressed: (){Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyProfileScreen(),));}, icon: Icon(Icons.arrow_back ,color: Colors.white, size: 30,),hoverColor:Colors.white.withOpacity(0.15) )
             ,SizedBox(width: 20,),
             textArea(Label: 'Contact Us', FontFamily: 'Karla Light', Fontweight: FontWeight.w700, fontSize: 36)
           ],

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:zlandsfrontend/pages/MappingScreen.dart';
+import 'package:zlandsfrontend/pages/maindashboard.dart';
 
 import '../blankscreen.dart';
 import '../common_widgets/common_widgets.dart';
@@ -52,14 +54,14 @@ class _FurtherQuestionsScreen3State extends State<FurtherQuestionsScreen3> {
           context,
           MaterialPageRoute(
 
-            builder: (context) => blank(),));
+            builder: (context) =>MainDashboard(),));
             }, ZColors: ZColors.buttonColorblue),),
             SizedBox(height: 40,),
             Padding(padding: const EdgeInsets.only(left: 150,right: 150),child: button(Label: "No", function: (){
               Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => blank(),));
+            builder: (context) => MappingLand(),));
             }, ZColors: ZColors.buttonColorred),)
             ,SizedBox(height: 30,),
             

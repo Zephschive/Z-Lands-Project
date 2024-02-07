@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
+import 'package:zlandsfrontend/pages/MessageSuccesScreen.dart';
 
 
 class MappingLand extends StatefulWidget {
@@ -113,7 +114,10 @@ class _MappingLandState extends State<MappingLand> {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return CustomDialog(DialogQuestion: "Are you sure you are done" , DialogButtonLeftText: "Not Quite", DialogButtonLeftFunction:(){}, DialogButtonRightText: "All done", DialogButtonRightFunction: (){}); 
+                  return CustomDialog(DialogQuestion: "Are you sure you are done" , DialogButtonLeftText: "Not Quite", DialogButtonLeftFunction:(){}, DialogButtonRightText: "All done", DialogButtonRightFunction: (){Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MessageSuccessScreen(),));}); 
                 },
               );
             

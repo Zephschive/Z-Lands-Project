@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/blankscreen.dart';
 import 'package:zlandsfrontend/common_widgets/Landspopup.dart';
+import 'package:zlandsfrontend/common_widgets/bottomnavigationbar.dart';
 import 'package:zlandsfrontend/pages/ContactUs.dart';
 import 'package:zlandsfrontend/pages/MappingScreen.dart';
 import 'package:zlandsfrontend/pages/MessageSuccesScreen.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home:ContactUsScreen(),
+      home:SplashView(),
     );
   }
 }

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
+import 'package:zlandsfrontend/pages/ContactUs.dart';
+import 'package:zlandsfrontend/pages/LoginScreen.dart';
+import 'package:zlandsfrontend/pages/maindashboard.dart';
 
 class MyProfileScreen extends StatelessWidget {
   const MyProfileScreen({super.key});
@@ -12,7 +15,12 @@ class MyProfileScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         title: Row(
           children: [
-            IconButton(onPressed: (){}, icon: Icon(Icons.arrow_back ,color: Colors.white, size: 30,),hoverColor:Colors.white.withOpacity(0.15) )
+            IconButton(onPressed: (){
+              Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MainDashboard(),));
+            }, icon: Icon(Icons.arrow_back ,color: Colors.white, size: 30,),hoverColor:Colors.white.withOpacity(0.15) )
             ,SizedBox(width: 20,),
             textArea(Label: 'My Profile', FontFamily: 'Karla Light', Fontweight: FontWeight.w700, fontSize: 36)
           ],
@@ -77,10 +85,18 @@ class MyProfileScreen extends StatelessWidget {
                   button(Label: "Generate My Report", function: (){}, ZColors: ZColors.buttonColorblue),
                    SizedBox(height: 25,),
                   button(Label: "Contact Us", function: (){
-                    
+                    Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ContactUsScreen(),));
                   }, ZColors: ZColors.buttonColorblue),
                    SizedBox(height: 25,),
-                  button(Label: "Sign-Out", function: (){}, ZColors: ZColors.buttonColorred),
+                  button(Label: "Sign-Out", function: (){
+                    Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => LoginScreen(),));
+                  }, ZColors: ZColors.buttonColorred),
 
                 ],
 

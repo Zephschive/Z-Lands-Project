@@ -3,17 +3,20 @@ import 'package:flutter/material.dart';
 class MyInputTextField extends StatelessWidget {
   String Label;
   TextEditingController Text ;
-  MyInputTextField({super.key,required this.Label,required this.Text});
+  var valid;
+  MyInputTextField({super.key,required this.Label,required this.Text,required this.valid});
 
   @override
   Widget build(BuildContext context) {
     return Container(
           child: Material( 
             type: MaterialType.transparency,
-            child: TextField
+            child: TextFormField
             (
+             validator: valid,
               controller: Text,
             decoration: InputDecoration(
+              
             hintText: Label,
             hintStyle: TextStyle(
               fontSize: 23,

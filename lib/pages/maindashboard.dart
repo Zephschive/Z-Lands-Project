@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/color_ext.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
+import 'package:zlandsfrontend/pages/MyProfileScreen.dart';
 
 class MainDashboard extends StatefulWidget {
   const MainDashboard({super.key});
@@ -10,11 +11,15 @@ class MainDashboard extends StatefulWidget {
 }
 
 class _MainDashboardState extends State<MainDashboard> {
+   int MyIndex =0;
+  List<Widget> widgetList = const [MainDashboard(),MyProfileScreen()];
+
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         backgroundColor: Colors.transparent ,
         toolbarHeight: 150,
         title: Column(
@@ -85,6 +90,39 @@ spreadRadius: 19,
         ],
       ),
       backgroundColor: ZColors.screencolor,
+      bottomNavigationBar:BottomNavigationBar(
+        showUnselectedLabels: true,
+        iconSize:25,
+        backgroundColor: Color.fromARGB(1, 129, 129, 129),
+        type: BottomNavigationBarType.shifting,
+        currentIndex: MyIndex,
+      
+        onTap: (index)
+        {
+          setState(() {
+            MyIndex=index;
+            if(MyIndex ==1 ){
+              Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(
+            builder: (context) => MyProfileScreen(),));
+            }
+          });
+        },
+        items: const [
+         BottomNavigationBarItem(icon:Icon(Icons.home) ,
+         label: 'Dashbord',
+          
+         backgroundColor: Colors.grey ,
+         ),
+         BottomNavigationBarItem(icon:Icon(Icons.person) ,
+         label: 'My Profile',
+          backgroundColor: Colors.grey,
+
+         ),
+         
+                  ],
+      ), 
     );
   }
 }

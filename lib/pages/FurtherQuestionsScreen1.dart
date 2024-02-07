@@ -61,15 +61,25 @@ class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
                         padding: const EdgeInsets.only(top: 20,left: 25,right: 20),
                         child: Column(
                           children: [
-                            MyInputTextField(Label: "Mobile Phone Number", Text: PhoneNumberController),
+                            MyInputTextField(Label: "Mobile Phone Number", Text: PhoneNumberController,valid:  (value){
+                 
+                    }),
                             SizedBox(height: 20,),
-                            MyInputTextField(Label: "ID NUMBER", Text: IDNumberController),
+                            MyInputTextField(Label: "ID NUMBER", Text: IDNumberController,valid:  (value){
+                 
+                    }),
                            SizedBox(height: 20,),
-                            MyInputTextField(Label: "Postal Address", Text: PostalAddressSignupController),
+                            MyInputTextField(Label: "Postal Address", Text: PostalAddressSignupController,valid:  (value){
+                 
+                    }),
                             SizedBox(height: 20,),
-                            MyInputTextField(Label: "Region", Text: RegionController),
+                            MyInputTextField(Label: "Region", Text: RegionController,valid:  (value){
+                 
+                    }),
                             SizedBox(height: 20,),
-                             MyInputTextField(Label: "Area", Text: AreaController),
+                             MyInputTextField(Label: "Area", Text: AreaController,valid:  (value){
+                 
+                    }),
                             SizedBox(height: 20,),
                             
                           ],
