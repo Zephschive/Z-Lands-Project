@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "386412573702",
+    "project_id": "zlands-final-year-project",
+    "storage_bucket": "zlands-final-year-project.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:386412573702:android:79beeaf38dd7f0d10dff87",
+        "android_client_info": {
+          "package_name": "com.example.zlandsfrontend"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5YAqGudFTTS9kEj_Y6NcVAJxBgJXP0tc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
