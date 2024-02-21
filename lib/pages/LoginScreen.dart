@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:zlandsfrontend/blankscreen.dart';
 import 'package:zlandsfrontend/common_widgets/MyInputTextfield.dart';
 import 'package:zlandsfrontend/common_widgets/color_ext.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
+import 'package:zlandsfrontend/db/db_helper.dart';
 import 'package:zlandsfrontend/pages/SignupScreen.dart';
 import 'package:zlandsfrontend/pages/maindashboard.dart';
 
@@ -16,8 +18,10 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController EmailController = TextEditingController();
   TextEditingController PasswordController = TextEditingController();
   final formkey =GlobalKey<FormState>();
+  DB_help db = DB_help();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
         body: ListView(
           physics: BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.normal, ),
@@ -113,12 +117,26 @@ class _LoginScreenState extends State<LoginScreen> {
             padding: const EdgeInsets.only(top: 25,left:120,right: 120),
             child: button(Label: "Sign-In", function: (){ 
               if(formkey.currentState!.validate()){
-             Navigator.pushReplacement(
-           context,
-           MaterialPageRoute(
-           builder: (context) => MainDashboard(),));
+              try{
+                db.signUserIn(EmailController.text, 
+                PasswordController.text,MainDashboard(),context
+                );
+
+              }catch(error)
+              
+              {
+                showDialog(
+    context: context,
+    builder: (context) => WarningDialog(DialogQuestion: "An Error Has Occured While Signing in")
+  );
+              }  
+
+             
               }else{
-                print("nope");
+                showDialog(
+    context: context,
+    builder: (context) => WarningDialog(DialogQuestion: "An Error Has Occured While Signing in")
+  );
               }
               
           
@@ -134,7 +152,10 @@ class _LoginScreenState extends State<LoginScreen> {
             SizedBox(height: 10,),
              Padding(
             padding: const EdgeInsets.only(top: 2,left:50,right: 50,bottom: 20),
-            child: bluebuttonWithGoogle(Label: "Sign-in", function: (){}),
+            child: bluebuttonWithGoogle(Label: "Sign-in", function: (){
+              db.signinwithGoogle(context, MainDashboard());
+              //db.signout(context, LoginScreen());
+            }),
           
           )
           ],

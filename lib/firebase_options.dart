@@ -67,6 +67,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '386412573702',
     projectId: 'zlands-final-year-project',
     storageBucket: 'zlands-final-year-project.appspot.com',
+    androidClientId: '386412573702-j8lvcufa2f8fbh5ad2n580np9tldch5d.apps.googleusercontent.com',
+    iosClientId: '386412573702-li9uqrffphuakj0bovpqb7k0su06armt.apps.googleusercontent.com',
     iosBundleId: 'com.example.zlandsfrontend',
   );
 
@@ -76,6 +78,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '386412573702',
     projectId: 'zlands-final-year-project',
     storageBucket: 'zlands-final-year-project.appspot.com',
+    androidClientId: '386412573702-j8lvcufa2f8fbh5ad2n580np9tldch5d.apps.googleusercontent.com',
+    iosClientId: '386412573702-cn76h9pq929ismk41ibj3hep3lmdrc62.apps.googleusercontent.com',
     iosBundleId: 'com.example.zlandsfrontend.RunnerTests',
   );
 }

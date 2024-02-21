@@ -11,3 +11,4 @@ export 'package:zlandsfrontend/common_widgets/textarea.dart';
 export 'package:zlandsfrontend/common_widgets/CustomDialog.dart';
 export 'package:zlandsfrontend/common_widgets/Landspopup.dart';
 export 'package:zlandsfrontend/common_widgets/bottomnavigationbar.dart';
+export 'package:zlandsfrontend/common_widgets/WarningDialog.dart';

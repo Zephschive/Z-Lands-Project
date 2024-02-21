@@ -1,7 +1,9 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/blankscreen.dart';
 import 'package:zlandsfrontend/common_widgets/Landspopup.dart';
 import 'package:zlandsfrontend/common_widgets/bottomnavigationbar.dart';
+import 'package:zlandsfrontend/firebase_options.dart';
 import 'package:zlandsfrontend/pages/ContactUs.dart';
 import 'package:zlandsfrontend/pages/MappingScreen.dart';
 import 'package:zlandsfrontend/pages/MessageSuccesScreen.dart';
@@ -11,13 +13,15 @@ import 'package:zlandsfrontend/pages/SuccessScreen.dart';
 import 'package:zlandsfrontend/pages/maindashboard.dart';
 import 'package:zlandsfrontend/pages/splashcreen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main()async {
+    WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.android);
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
+  
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {

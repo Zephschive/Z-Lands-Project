@@ -38,6 +38,11 @@ dependencies:
   modern_textfield: ^0.0.6
   firebase_core: ^2.24.2
   cloud_firestore:
+  firebase_auth: ^4.16.0
+  google_sign_in: ^6.1.6
+  google_maps_flutter: 
+  geolocator:
+  geocoding:
 
 dev_dependencies:
   flutter_test:

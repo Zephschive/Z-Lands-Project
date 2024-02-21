@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:zlandsfrontend/blankscreen.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
 import 'package:zlandsfrontend/pages/FurtherQuestionsScreen2.dart';
-
 import '../common_widgets/MyInputTextfield.dart';
 
 class FurtherQuestions1Screen extends StatefulWidget {
-  const FurtherQuestions1Screen({super.key});
+  const FurtherQuestions1Screen({Key? key}) : super(key: key);
 
   @override
   State<FurtherQuestions1Screen> createState() => _FurtherQuestions1ScreenState();
@@ -14,21 +12,18 @@ class FurtherQuestions1Screen extends StatefulWidget {
 
 class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
   TextEditingController PhoneNumberController = TextEditingController();
-  
   TextEditingController IDNumberController = TextEditingController();
-  
   TextEditingController PostalAddressSignupController = TextEditingController();
-  
   TextEditingController RegionController = TextEditingController();
-  
   TextEditingController AreaController = TextEditingController();
+  final formkey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var media = MediaQuery.of(context).size;
     return Scaffold(
       body: ListView(
-       physics: BouncingScrollPhysics(),
+        physics: BouncingScrollPhysics(),
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -42,67 +37,112 @@ class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
               textArea(Label: "  Some Further  ", FontFamily: 'Karla Light', Fontweight: FontWeight.w400, fontSize: 36),
             ],
           ),
-           Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               textArea(Label: " Questions ", FontFamily: 'Karla Light', Fontweight: FontWeight.w400, fontSize: 36),
             ],
           ),
           SizedBox(height: 20,),
-          
-       
-
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              InputTextArea(height: 450, 
+          Form(
+            key: formkey,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                      Padding(
-                        padding: const EdgeInsets.only(top: 20,left: 25,right: 20),
-                        child: Column(
-                          children: [
-                            MyInputTextField(Label: "Mobile Phone Number", Text: PhoneNumberController,valid:  (value){
-                 
-                    }),
-                            SizedBox(height: 20,),
-                            MyInputTextField(Label: "ID NUMBER", Text: IDNumberController,valid:  (value){
-                 
-                    }),
-                           SizedBox(height: 20,),
-                            MyInputTextField(Label: "Postal Address", Text: PostalAddressSignupController,valid:  (value){
-                 
-                    }),
-                            SizedBox(height: 20,),
-                            MyInputTextField(Label: "Region", Text: RegionController,valid:  (value){
-                 
-                    }),
-                            SizedBox(height: 20,),
-                             MyInputTextField(Label: "Area", Text: AreaController,valid:  (value){
-                 
-                    }),
-                            SizedBox(height: 20,),
-                            
-                          ],
-                        ),
+                InputTextArea(
+                  height: 450,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 20, left: 25, right: 20),
+                      child: Column(
+                        children: [
+                          MyInputTextField(
+                            Label: "Mobile Phone Number",
+                            Text: PhoneNumberController,
+                            valid: (value) {
+                              if (value!.isEmpty || !RegExp(r'^[0-9]{10}$').hasMatch(value)) {
+                                return "Invalid phone number";
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20,),
+                          MyInputTextField(
+                            Label: "ID NUMBER",
+                            Text: IDNumberController,
+                            valid: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter ID number";
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20,),
+                          MyInputTextField(
+                            Label: "Postal Address",
+                            Text: PostalAddressSignupController,
+                            valid: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter postal address";
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20,),
+                          MyInputTextField(
+                            Label: "Region",
+                            Text: RegionController,
+                            valid: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter region";
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20,),
+                          MyInputTextField(
+                            Label: "Area",
+                            Text: AreaController,
+                            valid: (value) {
+                              if (value!.isEmpty) {
+                                return "Please enter area";
+                              } else {
+                                return null;
+                              }
+                            },
+                          ),
+                          SizedBox(height: 20,),
+                        ],
                       ),
-                    ],
-              )
-            ],
+                    ),
+                  ],
+                )
+              ],
+            ),
           ),
-          SizedBox(
-            height: 30,
+          SizedBox(height: 30,),
+          Padding(
+            padding: const EdgeInsets.only(left: 150, right: 150),
+            child: button(
+              Label: "Continue",
+              function: () {
+                if (formkey.currentState!.validate()) {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(builder: (context) => FurtherQuestionsScreen2()),
+                  );
+                }
+              },
+              ZColors: ZColors.buttonColorblue,
+            ),
           ),
-            Padding(padding: const EdgeInsets.only(left: 150,right: 150),child: button(Label: "Continue", function: (){
-              Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (context) => FurtherQuestionsScreen2(),));
-            }, ZColors: ZColors.buttonColorblue),)
-            ,SizedBox(height: 30,),
-            
+          SizedBox(height: 30,),
           SizedBox(height: 30,)
         ],
-
       ),
       backgroundColor: ZColors.screencolor,
     );
