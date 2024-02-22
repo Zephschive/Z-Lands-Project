@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/color_ext.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
 import 'package:zlandsfrontend/pages/MappingScreen.dart';
+import 'package:zlandsfrontend/pages/maindashboard.dart';
 
 class NoteBeSureScreen extends StatelessWidget {
   const NoteBeSureScreen({super.key});
@@ -33,7 +34,7 @@ class NoteBeSureScreen extends StatelessWidget {
               Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => MappingLand(),));
+            builder: (context) => MainDashboard(),));
             }, ZColors: ZColors.buttonColorgreen),
             )
             ,SizedBox(height: 30,)

@@ -1,5 +1,8 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
+import 'package:zlandsfrontend/db/db_helper.dart';
 import 'package:zlandsfrontend/pages/FurtherQuestionsScreen2.dart';
 import '../common_widgets/MyInputTextfield.dart';
 
@@ -17,6 +20,8 @@ class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
   TextEditingController RegionController = TextEditingController();
   TextEditingController AreaController = TextEditingController();
   final formkey = GlobalKey<FormState>();
+  DB_help DB = DB_help();
+    bool na = true;
 
   @override
   Widget build(BuildContext context) {
@@ -127,18 +132,36 @@ class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
           SizedBox(height: 30,),
           Padding(
             padding: const EdgeInsets.only(left: 150, right: 150),
-            child: button(
+            child: na?button(
               Label: "Continue",
               function: () {
+                setState(() {
+                  na= false;
+                  
+                  
+                });
                 if (formkey.currentState!.validate()) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(builder: (context) => FurtherQuestionsScreen2()),
-                  );
-                }
+                  DB.AddFurtherDetails(PhoneNumberController.text, IDNumberController.text, 
+                  PostalAddressSignupController.text, RegionController.text,AreaController.text, context, FurtherQuestionsScreen2());
+                 
+                 
+                  Timer(Duration(seconds: 3), () { 
+                    setState(() {
+                  na= true;
+                  
+                });
+                  });
+                }else{
+                showDialog(
+    context: context,
+    builder: (context) => WarningDialog(DialogQuestion: "An Error Has Occured While Signing in")
+  ); setState(() {
+                  na= true;
+                });
+              }
               },
               ZColors: ZColors.buttonColorblue,
-            ),
+            ):CircularProgressIndicator(color: Colors.white,),
           ),
           SizedBox(height: 30,),
           SizedBox(height: 30,)

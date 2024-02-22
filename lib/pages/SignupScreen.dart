@@ -84,7 +84,7 @@ class _SignupScreenState extends State<SignupScreen> {
                             Label: "Full-Name",
                             Text: FullNameController,
                             valid: (value) {
-                              if (value!.isEmpty || !RegExp(r'^[a-zA-Z]{2,}$').hasMatch(value)) {
+                              if (value!.isEmpty || !RegExp(r'^[a-zA-Z\s]{2,}$').hasMatch(value)) {
                                 return "Invalid Entry";
                               } else {
                                 return null;
@@ -177,7 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
                PasswordSignupController.text,FurtherQuestions1Screen(),context
                 );
                 
-                  Timer(Duration(seconds: 3), () { 
+                  Timer(Duration(seconds: 5), () { 
                     setState(() {
                   na= true;
                   

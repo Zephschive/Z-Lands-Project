@@ -63,19 +63,86 @@ class DB_help{
   }
 
   
-void AddFurtherDetails(int Mobile,String IDNumber,String PostalAddress,String Region,String Area,BuildContext context,Widget screen)async
+void AddFurtherDetails(String Mobile,String IDNumber,String PostalAddress,String Region,String Area,BuildContext context,Widget screen)async
 {
-  FireDB.collection('Users').add({
-    'Mobile Phone Number':Mobile,
-    'ID Number':IDNumber,
-    'Postal Address':PostalAddress,
-    'Region':Region,
-    'Area':Area
-  }).catchError((error, stackTrace) =>showDialog(context: context, builder: (context)=>WarningDialog(DialogQuestion: error.toString()))).then((value) =>  Navigator.pushReplacement(
-           context,
-           MaterialPageRoute(
-           builder: (context) => screen,)));
+  //   final current = FirebaseAuth.instance.currentUser;
+  // FireDB.collection('Users').where('Email',isEqualTo: current!.email.toString()).add({
+  //   'Mobile Phone Number':Mobile,
+  //   'ID Number':IDNumber,
+  //   'Postal Address':PostalAddress,
+  //   'Region':Region,
+  //   'Area':Area
+  // }).catchError((error, stackTrace) =>showDialog(context: context, builder: (context)=>WarningDialog(DialogQuestion: error.toString()))).then((value) =>  Navigator.pushReplacement(
+  //          context,
+  //          MaterialPageRoute(
+  //          builder: (context) => screen,)));
+
+Future<void> updateUserData(String userEmail, Map<String, dynamic> newData) async {
+  try {
+    // Query the collection 'Users' for documents where 'Email' field matches the user's email
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('Email', isEqualTo: userEmail)
+        .get();
+
+    // Check if any documents are found
+    if (querySnapshot.docs.isNotEmpty) {
+      // Assuming there's only one document found, you can directly access its reference
+      DocumentReference userDocRef = querySnapshot.docs.first.reference;
+
+      // Update the document with the new data
+      await userDocRef.update(newData);
+
+      print('User data updated successfully');
+    } else {
+      // No document found with the provided email
+      print('No user found with the provided email');
+    }
+  } catch (error) {
+    print('Error updating user data: $error');
+  }
 }
+final current = FirebaseAuth.instance.currentUser;
+String userEmail = current!.email.toString();
+Map<String, dynamic> newData = {
+  'Mobile Phone Number': Mobile,
+  'ID Number': IDNumber,
+  'Postal Address': PostalAddress,
+  'Region': Region,
+  'Area': Area,
+};
+
+await updateUserData(userEmail, newData);
+
+
+Navigator.pushReplacement(
+         context,
+            MaterialPageRoute(
+       builder: (context) => screen,));
+
+}
+
+
+Future<String?> getUserName(String userEmail) async {
+  try {
+    QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+        .collection('Users')
+        .where('Email', isEqualTo: userEmail)
+        .get();
+
+    if (querySnapshot.docs.isNotEmpty) {
+      // Assuming there's only one document found, you can directly access its data
+      var userData = querySnapshot.docs.first.data() as Map<String, dynamic>;
+      return userData['Fullname']; // Use null-aware operator (?)
+    } else {
+      return null; // No user found with the provided email
+    }
+  } catch (error) {
+    print('Error getting user name: $error');
+    return null;
+  }
+}
+
 
 
 }
