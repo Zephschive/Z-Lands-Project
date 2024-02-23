@@ -4,6 +4,7 @@ import 'package:zlandsfrontend/blankscreen.dart';
 import 'package:zlandsfrontend/common_widgets/Landspopup.dart';
 import 'package:zlandsfrontend/common_widgets/bottomnavigationbar.dart';
 import 'package:zlandsfrontend/firebase_options.dart';
+import 'package:zlandsfrontend/google_map.dart';
 import 'package:zlandsfrontend/pages/ContactUs.dart';
 import 'package:zlandsfrontend/pages/MappingScreen.dart';
 import 'package:zlandsfrontend/pages/MessageSuccesScreen.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
         
         useMaterial3: true,
       ),
-      home:SplashView(),
+      home:MapSample(),
     );
   }
 }

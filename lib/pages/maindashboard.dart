@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/common_widgets/color_ext.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
@@ -14,7 +15,7 @@ class MainDashboard extends StatefulWidget {
 
 class _MainDashboardState extends State<MainDashboard> {
   int MyIndex = 0;
-  List<Widget> widgetList = const [MainDashboard(), MyProfileScreen()];
+  List<Widget> widgetList =  [MainDashboard(), MyProfileScreen()];
   DB_help DB = DB_help();
   String? userName;
 
@@ -84,7 +85,6 @@ class _MainDashboardState extends State<MainDashboard> {
         ),
       ),
       body: ListView(
-        physics: BouncingScrollPhysics(),
         children: [
           SizedBox(height: 25,),
           Row(
@@ -94,27 +94,50 @@ class _MainDashboardState extends State<MainDashboard> {
             ],
           ),
           SizedBox(height: 30,),
-          Column(
+          StreamBuilder<QuerySnapshot>(
+                            stream: DB.FireDB.collection('Users').snapshots(),
+                            builder: (context,  AsyncSnapshot<QuerySnapshot> snapshot) {
+                              if(snapshot.hasError){
+                                return const Center(
+                                  child: Text('Something Wrong here'),
+                                );
+                              }
+                              
+                              if (snapshot.connectionState ==ConnectionState.active){
+                                if (snapshot.data!.docs.isEmpty){
+                                  return const Center(
+                                    child: Text('No data added yet :'),
+                                  );
+                                } else {
+                                  return ListView(
+                                shrinkWrap: true,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: snapshot.data!.docs.map((DocumentSnapshot document){
+                                  Map<String, dynamic> data =document.data()! as Map<String, dynamic>;
+                                   var datafullname =data['Fullname'];
+                                   var dataEmail = data['Email'];
+                                  return Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.only(left: 15.0, right: 10, bottom: 20),
-                child: Landspopup(Title: "Ollennu's Residence"),
+                child: Landspopup(Title: datafullname.toString()+"'s Residence",email: dataEmail.toString(),),
               ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 10, bottom: 20),
-                child: Landspopup(Title: "Ollennu's Residence"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 10, bottom: 20),
-                child: Landspopup(Title: "Ollennu's Residence"),
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 15.0, right: 10, bottom: 20),
-                child: Landspopup(Title: "Ollennu's Residence"),
-              ),
+              
             ],
-          ),
+          );
+                                  
+                                }).toList(),
+                                );
+                                }
+                              }
+                              return const Center(
+                                child: Center(
+                                  child: Text('Loading Task.....'),
+                                ),
+                              );
+                            }
+                          )
         ],
       ),
       backgroundColor: ZColors.screencolor,

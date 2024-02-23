@@ -43,7 +43,7 @@ class DB_help{
 
 
   void signout(BuildContext context, Widget screen) async{
-      await FirebaseAuth.instance.signOut().then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) { return screen;})));
+      await FirebaseAuth.instance.signOut().catchError((error, stackTrace) => showDialog(context: context, builder: (context)=>WarningDialog(DialogQuestion: error.toString()))).then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) { return screen;})));
     } 
 
     void signUpUser(String Fullname,String EmailController,String PasswordController,Widget screen ,BuildContext context) async {
@@ -142,6 +142,26 @@ Future<String?> getUserName(String userEmail) async {
     return null;
   }
 }
+
+ Future<Map<String, dynamic>?> getUserData(String email) async {
+    try {
+      QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('Email', isEqualTo: email)
+          .get();
+
+      if (querySnapshot.docs.isNotEmpty) {
+        // Assuming there's only one document found, you can directly access its data
+        var userData = querySnapshot.docs.first.data();
+        return userData as Map<String, dynamic>;
+      } else {
+        return null; // No user found with the provided email
+      }
+    } catch (error) {
+      print('Error getting user data: $error');
+      return null;
+    }
+  }
 
 
 

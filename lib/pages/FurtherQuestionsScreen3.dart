@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/pages/MappingScreen.dart';
+import 'package:zlandsfrontend/pages/SuccessScreen.dart';
 import 'package:zlandsfrontend/pages/maindashboard.dart';
 
 import '../blankscreen.dart';
@@ -54,7 +55,7 @@ class _FurtherQuestionsScreen3State extends State<FurtherQuestionsScreen3> {
           context,
           MaterialPageRoute(
 
-            builder: (context) =>MainDashboard(),));
+            builder: (context) =>SuccessScreen(),));
             }, ZColors: ZColors.buttonColorblue),),
             SizedBox(height: 40,),
             Padding(padding: const EdgeInsets.only(left: 150,right: 150),child: button(Label: "No", function: (){

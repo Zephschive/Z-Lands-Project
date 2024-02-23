@@ -29,7 +29,7 @@ class _blankState extends State<blank> {
         ),
     ),
     child: Center(
-child: Landspopup(Title: "Blah")
+child: blank()
     ),
 );
   }

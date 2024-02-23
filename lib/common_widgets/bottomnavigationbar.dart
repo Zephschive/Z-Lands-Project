@@ -12,7 +12,7 @@ class bottomnavigation extends StatefulWidget {
 
 class _bottomnavigationState extends State<bottomnavigation> {
   int MyIndex =0;
-  List<Widget> widgetList = const [MainDashboard(),MyProfileScreen()];
+  List<Widget> widgetList =  [MainDashboard(),MyProfileScreen()];
 
   @override
   Widget build(BuildContext context) {

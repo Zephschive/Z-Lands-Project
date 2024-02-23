@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:zlandsfrontend/google_map.dart';
 
 class Mapbox extends StatefulWidget {
   const Mapbox({super.key});
@@ -14,12 +15,7 @@ class _MapboxState extends State<Mapbox> {
     return Container(
     width: media.width*0.9,
     height: media.height*0.4,
-    decoration: BoxDecoration(
-        image: DecorationImage(
-            image: AssetImage("assets/img/dummymap.png"),
-            fit: BoxFit.fill,
-        ),
-    ),
+    child: MapSample(),
 );
   }
 }

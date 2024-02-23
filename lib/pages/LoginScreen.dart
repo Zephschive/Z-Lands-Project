@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:zlandsfrontend/blankscreen.dart';
 import 'package:zlandsfrontend/common_widgets/MyInputTextfield.dart';
@@ -19,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController PasswordController = TextEditingController();
   final formkey =GlobalKey<FormState>();
   DB_help db = DB_help();
+  bool na = true;
   @override
   Widget build(BuildContext context) {
 
@@ -27,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
           physics: BouncingScrollPhysics(decelerationRate: ScrollDecelerationRate.normal, ),
           padding: EdgeInsets.only(left: 10),
           children: [
+            SizedBox(height: 50,),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -115,32 +119,48 @@ class _LoginScreenState extends State<LoginScreen> {
           
           Padding(
             padding: const EdgeInsets.only(top: 25,left:120,right: 120),
-            child: button(Label: "Sign-In", function: (){ 
-              if(formkey.currentState!.validate()){
-              try{
-                db.signUserIn(EmailController.text, 
+            child: na?button(Label: "Sign-In", function: (){ 
+               setState(() {
+                  na= false;
+                  
+                });
+                if (formkey.currentState!.validate()) {
+             try{
+            
+              db.signUserIn(EmailController.text, 
                 PasswordController.text,MainDashboard(),context
                 );
+                
+                  Timer(Duration(seconds: 5), () { 
+                    setState(() {
+                  na= true;
+                  
+                });
+                  });
+                  
+                
 
-              }catch(error)
-              
-              {
-                showDialog(
+             }
+             catch(error){
+             
+              showDialog(
     context: context,
     builder: (context) => WarningDialog(DialogQuestion: "An Error Has Occured While Signing in")
   );
-              }  
+  
+             }     
 
              
               }else{
                 showDialog(
     context: context,
     builder: (context) => WarningDialog(DialogQuestion: "An Error Has Occured While Signing in")
-  );
+  ); setState(() {
+                  na= true;
+                });
               }
-              
           
-          }, ZColors: ZColors.buttonColorblue),
+          }, ZColors: ZColors.buttonColorblue) :CircularProgressIndicator( color: Colors.white,),
           ),
           SizedBox(height: 20,),
             Row(
