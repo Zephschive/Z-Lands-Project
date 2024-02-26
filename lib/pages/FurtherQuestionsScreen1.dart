@@ -145,7 +145,7 @@ class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
                   PostalAddressSignupController.text, RegionController.text,AreaController.text, context, FurtherQuestionsScreen2());
                  
                  
-                  Timer(Duration(seconds: 3), () { 
+                  Timer(Duration(seconds: 15), () { 
                     setState(() {
                   na= true;
                   
@@ -161,7 +161,7 @@ class _FurtherQuestions1ScreenState extends State<FurtherQuestions1Screen> {
               }
               },
               ZColors: ZColors.buttonColorblue,
-            ):CircularProgressIndicator(color: Colors.white,),
+            ):SizedBox(height: 120,width: 120, child: CircularProgressIndicator( color: Colors.white,)),
           ),
           SizedBox(height: 30,),
           SizedBox(height: 30,)

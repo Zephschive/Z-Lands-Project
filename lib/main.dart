@@ -1,17 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:zlandsfrontend/blankscreen.dart';
-import 'package:zlandsfrontend/common_widgets/Landspopup.dart';
-import 'package:zlandsfrontend/common_widgets/bottomnavigationbar.dart';
+
 import 'package:zlandsfrontend/firebase_options.dart';
-import 'package:zlandsfrontend/google_map.dart';
-import 'package:zlandsfrontend/pages/ContactUs.dart';
-import 'package:zlandsfrontend/pages/MappingScreen.dart';
-import 'package:zlandsfrontend/pages/MessageSuccesScreen.dart';
-import 'package:zlandsfrontend/pages/MoreInfoScreen.dart';
-import 'package:zlandsfrontend/pages/MyProfileScreen.dart';
-import 'package:zlandsfrontend/pages/SuccessScreen.dart';
-import 'package:zlandsfrontend/pages/maindashboard.dart';
+
 import 'package:zlandsfrontend/pages/splashcreen.dart';
 
 void main()async {
@@ -34,7 +25,7 @@ class MyApp extends StatelessWidget {
         
         useMaterial3: true,
       ),
-      home:MapSample(),
+      home:SplashView(),
     );
   }
 }

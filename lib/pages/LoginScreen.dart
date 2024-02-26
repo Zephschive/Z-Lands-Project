@@ -131,7 +131,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 PasswordController.text,MainDashboard(),context
                 );
                 
-                  Timer(Duration(seconds: 5), () { 
+                  Timer(Duration(seconds: 15), () { 
                     setState(() {
                   na= true;
                   
@@ -160,7 +160,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 });
               }
           
-          }, ZColors: ZColors.buttonColorblue) :CircularProgressIndicator( color: Colors.white,),
+          }, ZColors: ZColors.buttonColorblue) :SizedBox(height: 120,width: 120, child: CircularProgressIndicator( color: Colors.white,)),
           ),
           SizedBox(height: 20,),
             Row(

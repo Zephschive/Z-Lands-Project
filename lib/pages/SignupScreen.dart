@@ -177,7 +177,7 @@ class _SignupScreenState extends State<SignupScreen> {
                PasswordSignupController.text,FurtherQuestions1Screen(),context
                 );
                 
-                  Timer(Duration(seconds: 5), () { 
+                  Timer(Duration(seconds: 15), () { 
                     setState(() {
                   na= true;
                   
@@ -207,7 +207,7 @@ class _SignupScreenState extends State<SignupScreen> {
               }
               },
               ZColors: ZColors.buttonColorblue,
-            ):CircularProgressIndicator(color: Colors.white,),
+            ):SizedBox(height: 120,width: 120, child: CircularProgressIndicator( color: Colors.white,)),
           ),
           SizedBox(height: 30,),
           
