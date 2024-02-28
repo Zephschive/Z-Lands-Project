@@ -7,6 +7,7 @@ import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
 import 'package:zlandsfrontend/db/db_helper.dart';
 import 'package:zlandsfrontend/pages/ContactUs.dart';
 import 'package:zlandsfrontend/pages/LoginScreen.dart';
+import 'package:zlandsfrontend/pages/MappingScreen.dart';
 import 'package:zlandsfrontend/pages/maindashboard.dart';
 
 class MyProfileScreen extends StatefulWidget {
@@ -90,7 +91,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
         setState(() {
           fullName = userData['Fullname'];
           area = userData['Area'];
-          status = "";
+          status = userData['status'];
           coordinates = "";
         });
       }
@@ -314,7 +315,19 @@ bool na;
                 SizedBox(height: 50),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
+                  children: [ SizedBox(height: 25),
+                    button(
+                      Label: "Go To Mapping Page ",
+                      function: () {
+                         Navigator.pushReplacement(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => MappingLand(),
+                          ),
+                        );
+                      },
+                      ZColors: ZColors.buttonColorblue,
+                    ),
                     SizedBox(height: 25),
                     button(
                       Label: "Generate My Report",

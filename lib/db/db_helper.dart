@@ -44,6 +44,17 @@ class DB_help{
   
   }
 
+     void ResetPassword(String EmailController,Widget screen ,BuildContext context) async {
+  await FirebaseAuth.instance.sendPasswordResetEmail(email: EmailController).catchError((error, stackTrace) => showDialog(context: context, builder: (context)=>WarningDialog(DialogQuestion: error.toString())))
+  .then((value) => showDialog(context: context, builder: (context)=>WarningDialog(DialogQuestion: "Reset Password link  has been sent to your email")));
+   Navigator.pushReplacement(
+           context,
+           MaterialPageRoute(
+           builder: (context) => screen,));
+  
+  }
+
+
 
   void signout(BuildContext context, Widget screen) async{
       await FirebaseAuth.instance.signOut().catchError((error, stackTrace) => showDialog(context: context, builder: (context)=>WarningDialog(DialogQuestion: error.toString()))).then((value) => Navigator.push(context, MaterialPageRoute(builder: (context) { return screen;})));
@@ -113,6 +124,7 @@ Map<String, dynamic> newData = {
   'Postal Address': PostalAddress,
   'Region': Region,
   'Area': Area,
+  'status':'not permitted'
 };
 
 await updateUserData(userEmail, newData);

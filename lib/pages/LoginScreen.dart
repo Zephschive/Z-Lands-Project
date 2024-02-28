@@ -6,6 +6,7 @@ import 'package:zlandsfrontend/common_widgets/MyInputTextfield.dart';
 import 'package:zlandsfrontend/common_widgets/color_ext.dart';
 import 'package:zlandsfrontend/common_widgets/common_widgets.dart';
 import 'package:zlandsfrontend/db/db_helper.dart';
+import 'package:zlandsfrontend/pages/Forgottenpassword.dart';
 import 'package:zlandsfrontend/pages/SignupScreen.dart';
 import 'package:zlandsfrontend/pages/maindashboard.dart';
 
@@ -97,7 +98,12 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                       ),
                       GestureDetector(
-                        onTap: (){}, 
+                        onTap: (){
+                           Navigator.pushReplacement(
+           context,
+           MaterialPageRoute(
+           builder: (context) => ForgottenPassScreen(),));
+                        }, 
                         
                         child: Text("Forgotten Passowrd?  ",
                         style: TextStyle(
