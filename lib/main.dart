@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:zlandsfrontend/firebase_options.dart';
+import 'package:zlandsfrontend/google_map.dart';
 
 import 'package:zlandsfrontend/pages/splashcreen.dart';
 

@@ -9,6 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoding/geocoding.dart';
 import 'dart:async';
+import 'dart:math';
 
 import 'package:zlandsfrontend/pages/maindashboard.dart';
 
@@ -143,7 +144,7 @@ class MappingLandNotPermitted extends StatelessWidget {
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: textArea(
-                Label: "Dear User, \n you are not permitted to make \n coordinates on your land",
+                Label: "Dear User, \n you are not permitted to make \n coordinates on your land yet",
                 FontFamily: 'Karla Light',
                 Fontweight: FontWeight.w400,
                 fontSize: 25,
@@ -209,6 +210,7 @@ class MapSampleState12 extends State<MapSample12> {
   final DB_help _db = DB_help();
   List<Marker> _manyMarker = [];
   List<LatLng> _points = [];
+  List<LatLng> _points2 = [];
 
   static const CameraPosition _kGooglePlex = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
@@ -267,6 +269,88 @@ class MapSampleState12 extends State<MapSample12> {
       );
     });
   }
+ Future<void> checkIntersection(List<LatLng> userPositions) async {
+  try {
+    // Retrieve positions of other users from the database
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance.collection('Users').get();
+
+    // Track if intersection has been detected
+    bool intersectionDetected = false;
+
+    // Iterate through each user's positions
+    snapshot.docs.forEach((doc) {
+      if (doc.data().containsKey('Coordinates')) {
+        final regex = RegExp(r'LatLng\(([^,]+),\s([^)]+)\)');
+        final matches = regex.allMatches(doc['Coordinates'].toString());
+        List<LatLng> otherUserPositions = matches
+          .map((match) => LatLng(
+            double.parse(match.group(1)!),
+            double.parse(match.group(2)!),
+          ))
+          .toList();
+          print(otherUserPositions);
+
+        // Check for intersection with each position of the other user
+        otherUserPositions.forEach((otherPosition) {
+          // Compare each user's position with the new position
+          userPositions.forEach((userPosition) {
+            if (!intersectionDetected && isIntersecting(userPosition, otherPosition)) {
+              intersectionDetected = true;
+              // Intersection detected, prompt the user once
+              showDialog(
+                context: context,
+                builder: (BuildContext context) {
+                  return AlertDialog(
+                    title: Text('Boundary Crossed'),
+                    content: Text('You have crossed the boundaries of another user.'),
+                    actions: <Widget>[
+                      TextButton(
+                        child: Text('OK'),
+                        onPressed: () {
+                          Navigator.of(context).pop();
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            }
+          });
+        });
+      }
+    });
+  } catch (e) {
+    print('Error checking intersection: $e');
+  }
+}
+
+
+
+// Function to check if two positions intersect or are in close proximity
+bool isIntersecting(LatLng position1, LatLng position2) {
+   print(position1);
+   print()
+   bool returnning=false; 
+  if (position1.latitude == position2.latitude && position1.longitude == position2.longitude) {
+
+    returnning=true;
+  }
+  print(returnning);
+  // Calculate the distance between the positions
+  return returnning;
+}
+
+// Function to calculate the distance between two LatLng positions
+double calculateDistance(LatLng position1, LatLng position2) {
+  // You can use the haversine formula or any other method to calculate distance
+  // This is a simplified example using straight line distance
+  double dx = position1.latitude - position2.latitude;
+  double dy = position1.longitude - position2.longitude;
+  return sqrt(dx * dx + dy * dy); // Here's the corrected usage of sqrt
+}
+
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -328,16 +412,30 @@ class MapSampleState12 extends State<MapSample12> {
                 return CustomDialog(
                   DialogQuestion: "Are you sure you are done",
                   DialogButtonLeftText: "Not Quite",
-                  DialogButtonLeftFunction: () {},
+                  DialogButtonLeftFunction: () {
+                    Navigator.pop(context);
+                  },
                   DialogButtonRightText: "Yes I am",
                   DialogButtonRightFunction: () {
-                    _db.AddMapCoordinates(_points);
-                    showDialog(
+                    if (_points.isEmpty && _manyMarker.isEmpty){
+                        showDialog(
                       context: context,
                       builder: (BuildContext context) {
-                        return LoadingDialog(screen: MessageSuccessScreen(), seconds: 2);
+                        return WarningDialog(DialogQuestion:"Invaild Entries Please Retry Again" );
                       },
                     );
+                    }
+                    else{
+                      checkIntersection(_points);
+                     // _db.AddMapCoordinates(_points);
+                     // _db.updateCoordinates(_points);
+                    // showDialog(
+                    //   context: context,
+                    //   builder: (BuildContext context) {
+                    //     return LoadingDialog(screen: MessageSuccessScreen(), seconds: 2);
+                    //   },
+                    // );
+                    } 
                   },
                 );
               },

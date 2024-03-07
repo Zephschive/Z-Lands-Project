@@ -173,6 +173,9 @@ Future<void> updateUserData(String userEmail, Map<String, dynamic> newData) asyn
       // No document found with the provided email
       print('No user found with the provided email');
     }
+
+
+
   } catch (error) {
     print('Error updating user data: $error');
   }
@@ -184,6 +187,7 @@ Map<String, dynamic> newData = {
 };
 
 await updateUserData(userEmail, newData);
+
 
 
 }
@@ -232,6 +236,28 @@ Future<String?> getUserName(String userEmail) async {
       return null;
     }
   }
+
+Future<void> updateCoordinates(List<LatLng> coordinatesList) async {
+  try {
+    // Reference to the Firestore collection "Coordinates"
+    CollectionReference<Map<String, dynamic>> coordinatesCollection = FirebaseFirestore.instance.collection('Coordinates');
+
+    // Retrieve the document reference for the first document in the collection
+    DocumentReference<Map<String, dynamic>> documentRef = coordinatesCollection.doc('Collections'); // Replace 'document_id' with your document ID or generate one dynamically
+
+    // Update the "Coords" field in the document with the new list of coordinates
+    await documentRef.set({
+      'Coords': coordinatesList.toString(),
+    }, SetOptions(merge: true)); // Use merge: true to merge with existing data if the document already exists
+  } catch (e) {
+    print('Error updating coordinates: $e');
+  }
+}
+
+
+
+
+
 
 
 

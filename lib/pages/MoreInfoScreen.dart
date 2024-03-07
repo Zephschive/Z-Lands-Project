@@ -138,28 +138,40 @@ Polygon manypolygon = Polygon(
                   child: Container(
                     width: media.width * 0.9,
                     height: media.height * 0.4,
-                    child: GoogleMap(
-                     polygons: {
-                        _points.isNotEmpty ? manypolygon : manynotpolygon
-                      },
-                      markers: Set<Marker>.from(_manyMarker),
-                      mapType: MapType.normal,
-                      initialCameraPosition: _kGooglePlex,
-                      onMapCreated: (controller) {
-                        _googleMapController = controller;
-                        if (_points.isNotEmpty) {
-                          _googleMapController!.animateCamera(
-                            CameraUpdate.newCameraPosition(
-                              CameraPosition(
-                                target: _points.first,
-                                zoom: 18,
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                      onTap: (position) async {},
-                    ),
+                    child: _points.isNotEmpty
+    ? GoogleMap(
+        polygons: {
+          manypolygon
+        },
+        markers: Set<Marker>.from(_manyMarker),
+        mapType: MapType.normal,
+        initialCameraPosition: _kGooglePlex,
+        onMapCreated: (controller) {
+          _googleMapController = controller;
+          if (_points.isNotEmpty) {
+            _googleMapController!.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: _points.first,
+                  zoom: 18,
+                ),
+              ),
+            );
+          }
+        },
+        onTap: (position) async {},
+      )
+    : Center(
+        child: Text(
+          'No coordinates available yet',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
+        ),
+      ),
+
                   ),
                 ),
                 SizedBox(height: 30),

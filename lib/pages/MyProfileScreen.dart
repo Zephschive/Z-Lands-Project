@@ -1,5 +1,7 @@
 import 'dart:async';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -23,6 +25,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   String? area;
   String? status;
   String? coordinates;
+  late String? _email = DB.Authen.currentUser?.email;
   GoogleMapController? _googleMapController;
    final Completer<GoogleMapController> _controller =
       Completer<GoogleMapController>();
@@ -81,6 +84,7 @@ class _MyProfileScreenState extends State<MyProfileScreen> {
   }).catchError((error) {
     print('Error fetching user data: $error');
   });
+  _email = DB.Authen.currentUser?.email;
   }
 
   Future<void> fetchUserData() async {
@@ -161,6 +165,38 @@ void moveCameraToFirstPoint() {
 
 
 
+ 
+
+ Future<String?> _getUserStatus(String email) async {
+  try {
+    final User? user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('Users')
+          .where('Email', isEqualTo: email)
+          .get();
+      if (snapshot.docs.isNotEmpty) {
+        final userDocument = snapshot.docs.first.data();
+        if (userDocument.containsKey('Coordinates')) {
+          return userDocument['Coordinates'];
+        } else {
+          // If status field is not found
+          return null;
+        }
+      } else {
+        // If no document is found for the given email
+        return null;
+      }
+    } else {
+      // If user is not signed in
+      return null;
+    }
+  } catch (e) {
+    print('Error fetching user Coordinates: $e');
+    return null;
+  }
+}
+
 
 
 
@@ -232,31 +268,40 @@ bool na;
             child: Container(
     width: media.width*0.9,
     height: media.height*0.4,
-    child: GoogleMap(
-     polygons: {_points.isNotEmpty ? manypolygon : manynotpolygon},
-       // polylines: {manypolyline},
-        
+    child: _points.isNotEmpty
+    ? GoogleMap(
+        polygons: {
+          manypolygon
+        },
         markers: Set<Marker>.from(_manyMarker),
         mapType: MapType.normal,
         initialCameraPosition: _kGooglePlex,
         onMapCreated: (controller) {
-                _googleMapController = controller;
-                if (_points.isNotEmpty) {
-                  _googleMapController!.animateCamera(
-                    CameraUpdate.newCameraPosition(
-                      CameraPosition(
-                        target: _points.first,
-                        zoom: 18,
-                      ),
-                    ),
-                  );
-                }
-              },
-        onTap: (position) async{
-       
-          
+          _googleMapController = controller;
+          if (_points.isNotEmpty) {
+            _googleMapController!.animateCamera(
+              CameraUpdate.newCameraPosition(
+                CameraPosition(
+                  target: _points.first,
+                  zoom: 18,
+                ),
+              ),
+            );
+          }
         },
+        onTap: (position) async {},
+      )
+    : Center(
+        child: Text(
+          'No coordinates available yet',
+          style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),
+        ),
       ),
+
 ) //mapbox,
           ),
           SizedBox(height: 30),
@@ -293,11 +338,21 @@ bool na;
                   ],
                 ),SizedBox(height: 30),Row(
                       children: [
-                        textArea(
-                          Label: "Status: $status",
-                          FontFamily: 'Karla Light',
-                          Fontweight: FontWeight.w700,
-                          fontSize: 22,
+                        Row(
+                          children: [
+                            textArea(
+                              Label: "Status: ",
+                              FontFamily: 'Karla Light',
+                              Fontweight: FontWeight.w700,
+                              fontSize: 22,
+                            ),
+                            textArea(
+                              Label: "'"+"$status"+"'",
+                              FontFamily: 'Karla',
+                              Fontweight: FontWeight.w900,
+                              fontSize: 22,
+                            )
+                          ],
                         ),
                       ],
                     ),
@@ -313,11 +368,40 @@ bool na;
                   ],
                 ),
                 SizedBox(height: 50),
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [ SizedBox(height: 25),
-                    button(
-                      Label: "Go To Mapping Page ",
+                FutureBuilder<String?>(
+        future: _getUserStatus(_email ?? ''),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return  CircularProgressIndicator(color: Colors.white10);
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else {
+            String status = snapshot.data ?? '';
+            if (status.isNotEmpty) {
+              return Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  
+                  Container(
+                    padding: EdgeInsets.only(left: 50,right: 50),
+                    child: button(
+                            Label: "Already Done Mapping ",
+                            function: () {
+                               Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => MainDashboard(),
+                                ),
+                              );
+                            },
+                            ZColors: ZColors.gray,
+                          ),
+                  ),
+                ],
+              );
+            } else {
+              return button(
+                      Label: "Go To Mapping Page",
                       function: () {
                          Navigator.pushReplacement(
                           context,
@@ -327,13 +411,17 @@ bool na;
                         );
                       },
                       ZColors: ZColors.buttonColorblue,
-                    ),
+                    );
+            }
+          }
+        },
+      ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [ SizedBox(height: 25),
+                    
                     SizedBox(height: 25),
-                    button(
-                      Label: "Generate My Report",
-                      function: () {},
-                      ZColors: ZColors.buttonColorblue,
-                    ),
+                    
                     SizedBox(height: 25),
                     button(
                       Label: "Contact Us",
