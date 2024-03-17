@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'package:zlandsfrontend/firebase_options.dart';
 import 'package:zlandsfrontend/google_map.dart';
+import 'package:zlandsfrontend/pages/MappingScreen.dart';
 
 import 'package:zlandsfrontend/pages/splashcreen.dart';
 

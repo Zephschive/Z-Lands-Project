@@ -71,7 +71,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       },)                ),
                   Padding(
                     padding: const EdgeInsets.all(15.0),
-                    child: MyInputTextField(Label: "Password", Text: PasswordController,valid:  (value){
+                    child: MyInputTextField(
+                      
+                      Label: "Password", Text: PasswordController,valid:  (value){
                    
                       }),
                         

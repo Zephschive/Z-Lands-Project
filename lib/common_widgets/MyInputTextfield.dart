@@ -13,6 +13,7 @@ class MyInputTextField extends StatelessWidget {
             type: MaterialType.transparency,
             child: TextFormField
             (
+              
              validator: valid,
               controller: Text,
             decoration: InputDecoration(
