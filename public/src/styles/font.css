@@ -1,0 +1,21 @@
+@font-face {
+  font-display: swap;
+  font-style: normal;
+  src: url("/public/fonts/JockeyOneRegular.ttf");
+  font-family: "Jockey One";
+  font-weight: 400;
+}
+@font-face {
+  font-display: swap;
+  font-style: normal;
+  src: url("/public/fonts/KarlaBold.ttf");
+  font-family: "Karla";
+  font-weight: 700;
+}
+@font-face {
+  font-display: swap;
+  font-style: normal;
+  src: url("/public/fonts/KarlaExtraBold.ttf");
+  font-family: "Karla";
+  font-weight: 800;
+}
